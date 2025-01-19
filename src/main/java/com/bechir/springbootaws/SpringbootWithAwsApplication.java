@@ -1,15 +1,15 @@
 package com.bechir.springbootaws;
 
 import com.amazonaws.services.s3.model.AmazonS3Exception;
-import com.bechir.springbootaws.Service.S3Service;
-import lombok.extern.log4j.Log4j;
+import com.bechir.springbootaws.Services.S3Service;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.boot.ApplicationRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
-@Log4j2
+
 @SpringBootApplication
+@Log4j2
 public class SpringbootWithAwsApplication {
 
     public static void main(String[] args) {
@@ -18,7 +18,7 @@ public class SpringbootWithAwsApplication {
     @Bean
     public ApplicationRunner applicationRunner(S3Service s3Service){
         return args -> {
-            System.out.println("Application started");
+            log.info("Uploading file to S3");
 
             try {
                 var s3Object = s3Service.getFile("jvm.png");
