@@ -12,4 +12,6 @@ import java.util.Optional;
 @Repository
 public interface ImageRepository extends MongoRepository<Image, ObjectId> {
     Optional<Image> findByName(String name);
+
+    Optional<Image> findByUrl(String url);
 }

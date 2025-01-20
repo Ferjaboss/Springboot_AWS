@@ -7,12 +7,14 @@ import org.springframework.core.io.Resource;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
 
-@RestController
+
+@Controller
 @RequestMapping("/api/v1")
 public class S3Controller {
     @Autowired
@@ -30,7 +32,7 @@ public class S3Controller {
     @PostMapping(path = "/upload", consumes = {MediaType.MULTIPART_FORM_DATA_VALUE})
     public String uploadFile(@RequestParam("file") MultipartFile file) throws IOException {
         s3Service.uploadFile(file.getOriginalFilename(), file);
-        return "File uploaded";
+        return "redirect:/";
     }
 
     @GetMapping("/download/{fileName}")
@@ -54,7 +56,7 @@ public class S3Controller {
     @DeleteMapping("/delete/{fileName}")
     public String deleteFile(@PathVariable String fileName) {
         s3Service.deleteFile(fileName);
-        return "File deleted";
+        return "redirect:/";
     }
 
 }

@@ -14,6 +14,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
 import java.sql.Timestamp;
+import java.util.Optional;
 
 @Log4j2
 @Service
@@ -33,7 +34,7 @@ public class S3Service {
     }
 
     public void uploadFile(String keyName, MultipartFile file) throws IOException {
-        String ImageName = keyName+System.currentTimeMillis();
+        String ImageName = System.currentTimeMillis()+keyName;
         Image image = new Image();
         image.setName(file.getOriginalFilename());
         image.setUrl(ImageName);
@@ -48,6 +49,12 @@ public class S3Service {
 
 
     public void deleteFile(String keyName) {
+        System.out.println(keyName);
+        Optional<Image> image = imageRepository.findByUrl(keyName);
+        if (image.isEmpty()) {
+            throw new RuntimeException("Image not found");
+        }
+        imageRepository.delete(image.get());
         s3client.deleteObject(bucketName, keyName);
     }
 

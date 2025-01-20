@@ -19,6 +19,7 @@ public class MainController {
             model.addAttribute("images", imgSvc.getAllImages());
             return "index.html";
         }
+
         @RequestMapping("/upload")
         public String upload() {
             return "UploadImage.html";
